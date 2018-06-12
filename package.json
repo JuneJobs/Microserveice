@@ -1,0 +1,25 @@
+{
+  "name": "microservice",
+  "version": "1.0.0",
+  "description": "tutorial",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuneJobs/Microserveice.git"
+  },
+  "keywords": [
+    "Micro",
+    "service",
+    "Node",
+    "JS"
+  ],
+  "author": "JuneJobs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JuneJobs/Microserveice/issues"
+  },
+  "homepage": "https://github.com/JuneJobs/Microserveice#readme"
+}
