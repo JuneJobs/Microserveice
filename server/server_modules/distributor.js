@@ -3,7 +3,7 @@
  * @description Tcp Server Object distributor
  * @author Junhee Park (j.jobs1028/gmail.com, Qualcomm Institute)
  * @since       2018. 06. 12.
- * @last update 2018. 06. 12.
+ * @last update 2018. 06. 13.
  */
 
  var map = {};
@@ -16,7 +16,7 @@
   */
 
 /**
- * Define param protocol
+ * Define protocol
  * 
  * [
  *    {

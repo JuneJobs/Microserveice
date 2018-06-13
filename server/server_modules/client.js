@@ -1,10 +1,10 @@
 'use strict'
 /**
  * @description Tcp Client Object
- * @author Junhee Park (j.jobs1028@gmail.com, Qualcomm Institute)
+ * @author Junhee Park (j.jobs1028/gmail.com, Qualcomm Institute)
  * @brief net documentation: https://nodejs.org/api/net.html
  * @since       2018. 06. 12.
- * @last update 2018. 06. 12.
+ * @last update 2018. 06. 13.
  * +-------------+
  * |  tcpClient  |
  * +-------------+
