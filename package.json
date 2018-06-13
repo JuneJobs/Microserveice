@@ -21,5 +21,10 @@
   "bugs": {
     "url": "https://github.com/JuneJobs/Microserveice/issues"
   },
-  "homepage": "https://github.com/JuneJobs/Microserveice#readme"
+  "homepage": "https://github.com/JuneJobs/Microserveice#readme",
+  "dependencies": {
+    "http": "0.0.0",
+    "net": "^1.0.2"
+  }
+  
 }
