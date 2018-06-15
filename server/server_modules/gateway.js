@@ -28,16 +28,17 @@ var server = http.createServer((req, res) => {
     var method = req.method;
     var uri = url.parse(req.url, true);
     var pathname = uri.pathname;
-
+    //if not "GET" method
     if(method === "POST" || method === "PUT") {
         var body = "";
 
-        req.on('data', function (data) {
+        req.on('data', function (data) { //Add strings from first and next data chunks
             body += data;
         });
 
-        req.on('end', function () {
+        req.on('end', function () {     //Add the last chunks
             var params;
+            //change the strings format to request
             if (req.headers['content-type'] == "application/json") {
                 params = JSON.parse(body);
             } else {
@@ -45,13 +46,14 @@ var server = http.createServer((req, res) => {
             }
             onRequest(res, method, pathname, params);
         });
+    //if "GET" method
     } else {
         onRequest(res, method, pathname, uri.query);
     }
- }).listen(8000, () => {
+ }).listen(8000, () => {    //Start running the  web server and receive the requets on port 8080
     console.log('listen', server.address());
 
-    var packet = {
+    var packet = {  //Packet for delivering distributor information 
         uri: "/distributes",
         method: "POST",
         key: 0,
@@ -66,7 +68,7 @@ var server = http.createServer((req, res) => {
     this.clientDistributor = new tcpClient (
         "127.0.0.1"
         , 9000
-        , (options) => {
+        , (options) => {    //Event for the distributor connected successful
             isConnectedDistributor = true;
             this.clientDistributor.write(packet);
         }
@@ -75,7 +77,7 @@ var server = http.createServer((req, res) => {
         , (options) => { isConnectedDistributor = false }
     );
     
-    setInterval(() => {
+    setInterval(() => {     //Update distributor on connection by every interval 
         if (isConnectedDistributor != true) {
             this.clientDistributor.connect();
         }
@@ -107,13 +109,13 @@ function onRequest(res, method, pathname, params) {
     }
 }
 
-function onDistribute (data) {
+function onDistribute (data) {      //Reveive the distributors data
     for (var n in data.params) {
         var node = data.params[n];
         var key = node.host + ":" + node.port;
         if (mapClients[key] == null && node.name != "gate") {
             var client = new tcpClient(node.host, node.port, onCreateClient, onReadClient, onEndClient, onErrorClient);
-        mapClients[key] = {
+            mapClients[key] = {     //Store microservice configuration information
             client: client,
             info: node
         };
@@ -140,7 +142,7 @@ function onReadClient (options, packet) {
     delete mapResponse[packet.key];
 }
 
-function onEndClient (options) {
+function onEndClient (options) {        //Delete information of the ended microservice
     var key = options.host + ":" + options.port;
     console.log("onEndClient", mapClients[key]);
     for (var n in mapClients[key].info.urls) {
