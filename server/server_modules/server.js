@@ -3,16 +3,16 @@
  * @description Tcp Server Object
  * @author Junhee Park (j.jobs1028/gmail.com, Qualcomm Institute)
  * @brief net documentation: https://nodejs.org/api/net.html
+ *        +----------------------+
+ *        |      tcpServer       |
+ *        +----------------------+
+ *        |tcpClient: tcpClient  |
+ *        |server: net           |
+ *        +----------------------+
+ *        |connectToDistributor()|
+ *        +----------------------+
  * @since       2018. 06. 12.
  * @last update 2018. 06. 12.
- * +----------------------+
- * |      tcpServer       |
- * +----------------------+
- * |tcpClient: tcpClient  |
- * |server: net           |
- * +----------------------+
- * |connectToDistributor()|
- * +----------------------+
  */
 
 const net = require('net');
@@ -29,7 +29,7 @@ class tcpServer {
         this.merge = {};
 
         this.server = net.createServer((socket) => {    //Create server
-            this.onCreate(socket);  // (?) net.onCreate
+            this.onCreate(socket);      // (?) net.onCreate
 
             socket.on('error', (exception) => {
                 this.onClose(socket);
@@ -39,10 +39,12 @@ class tcpServer {
             });
             socket.on('data', (data) => {
                 var key = socket.remoteAddress + ':' + socket.remotePort;
+                console.log(key);
                 var sz = this.merge[key] ? this.merge[key] + data.toString() :
                          data.toString();
+                var arr = sz.split('	');
                 for (var n in arr) { // (?)
-                    if (sz.charAt(sz.length - 1) != ' ' && n == arr.length - 1) {
+                    if (sz.charAt(sz.length - 1) != '	' && n == arr.length - 1) {
                         this.merge[key] = arr[n];
                         break;
                     } else if (arr[n] == ""){
@@ -54,7 +56,7 @@ class tcpServer {
             });
         });
 
-        this.server.on('error', (err) => {
+        this.server.on('error', (err) => {      //Handling server object error
             console.log(err);
         });
 

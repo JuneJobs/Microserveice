@@ -1,15 +1,16 @@
-import { onRequest } from '../controller/goods';
 
 /**
- * @description Gateway for the client request
+ * @description Interface for the client request
  * @author Junhee Park (j.jobs1028/gmail.com, Qualcomm Institute)
- * @brief net documentation: https://nodejs.org/api/net.html
+ * @brief Microservice should work with other API nodes using same interface and packet format
+ *        +--------+    +-----------+    +-----------+
+ *        | Client | <- |***HTTP****| <- |   Micro   |
+ *        |        | -> |**Gateway**| -> |  Service  |
+ *        +--------+    +-----------+    +-----------+
+ *        Http server as a http gateway
+ * 
  * @since       2018. 06. 13.
  * @last update 2018. 06. 13.
- * +--------+    +-----------+    +-----------+
- * | Client | <- |***HTTP****| <- |   Micro   |
- * |        | -> |**Gateway**| -> |  Service  |
- * +--------+    +-----------+    +-----------+
  */
 
 const http = require('http');
@@ -63,7 +64,7 @@ var server = http.createServer((req, res) => {
         urls: []
         }
     };
-    var inConnectedDistributor = false;
+    var isConnectedDistributor = false;
 
     this.clientDistributor = new tcpClient (
         "127.0.0.1"
@@ -87,25 +88,25 @@ var server = http.createServer((req, res) => {
 function onRequest(res, method, pathname, params) {
     var key = method + pathname;
     var client = mapUrls[key];
-    if (client == null) {
+    if (client == null) {       //If received API is not registered in the distributors 
         res.writeHead(404);
         res.end();
         return;
     } else {
-        params.key = index; 
-        var packet = {
+        params.key = index;     //Allocate a new key for the API service
+        var packet = {      
             uri: pathname,
             method: method,
             params: params
         };
 
-        mapResponse[index] = res;
-        index++;
+        mapResponse[index] = res;   //Store response object in mapResponse (why?)
+        index++;                    //Increase index number for the next API registration request
 
-        if (mapRR[key] == null)
+        if (mapRR[key] == null)     //Key round robin 
             mapRR[key] = 0;
         mapRR[key]++;
-        client[mapRR[key] % client.length].write(packet);
+        client[mapRR[key] % client.length].write(packet);   //Request to the microservice
     }
 }
 
@@ -135,11 +136,11 @@ function onCreateClient(options){
     console.log("onCreateClient");
 }
 
-function onReadClient (options, packet) {
+function onReadClient (options, packet) {       //Response from the microservice
     console.log("onReadClient", packet);
     mapResponse[packet.key].writeHead(200, { 'content-Type': 'application/json' });
     mapResponse[packet.key].end(JSON.stringify(packet));
-    delete mapResponse[packet.key];
+    delete mapResponse[packet.key];             //Delete response object from the microservice
 }
 
 function onEndClient (options) {        //Delete information of the ended microservice

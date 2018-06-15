@@ -39,9 +39,9 @@ class tcpClient{
 
         this.client.on('data', (data) => {  //Event for data reception
             var sz = this.merge ? this.merge + data.toString() : data.toString();
-            var arr = sz.split('    ');
+            var arr = sz.split('	');
             for(var n in arr){
-                if(sz.charAt(sz.length-1) != '  ' && n == arr.length -1) {
+                if (sz.charAt(sz.length - 1) != '	' && n == arr.length -1) {
                     this.merge = arr[n];
                     break;
                 } else if (arr[n] == ""){

@@ -74,7 +74,7 @@
      }
 
      write(socket, packet) {
-         socket.write(JSON.stringify(packet) + ' ');
+         socket.write(JSON.stringify(packet) + '	');
      }
 
      sendInfo(socket) {
