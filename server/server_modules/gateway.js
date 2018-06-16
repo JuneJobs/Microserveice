@@ -61,7 +61,7 @@ var server = http.createServer((req, res) => {
         params: {
             port: 8000,
             name: "gate",
-        urls: []
+            urls: []
         }
     };
     var isConnectedDistributor = false;

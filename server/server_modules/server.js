@@ -28,10 +28,10 @@ class tcpServer {
         }
         this.merge = {};
 
-        this.server = net.createServer((socket) => {    //Create server
-            this.onCreate(socket);      // (?) net.onCreate
+        this.server = net.createServer((socket) => {    //Create server obeject
+            this.onCreate(socket);      // (?) net.onCreate, The event occurs when client make connection
 
-            socket.on('error', (exception) => {
+            socket.on('error', (exception) => { //Error event
                 this.onClose(socket);
             });
             socket.on('close', (exception) => {
@@ -78,7 +78,7 @@ class tcpServer {
             uri: "/distributes",
             method: "POST",
             key: 0,
-            param: this.context
+            params: this.context
         };
         var isConnectedDistributor = false;
 

@@ -44,31 +44,31 @@
  */
  class distributor extends require('./server.js') {
      constructor() {
-        super("distributor", 9000, ["POST/distributor", "GET/distributor"]); // (?) super
+        super("distributor", 9000, ["POST/distributes", "GET/distributes"]); // (?) super
      }
 
      onCreate(socket) {
-         console.log("onCreate", socket.remoteAddess, socket.remotePort);
+         console.log("onCreate", socket.remoteAddress, socket.remotePort);
          this.sendInfo(socket);
      }
 
      onClose(socket) {
-         var key = socket.remoteAddess + ":" + socket.remotePort;
-         console.log("onClose", socket.remoteAddess, socket.remotePort);
+         var key = socket.remoteAddress + ":" + socket.remotePort;
+         console.log("onClose", socket.remoteAddress, socket.remotePort);
          delete map[key];
          this.sendInfo();
      }
 
      onRead(socket, json) {
-         var key = socket.remoteAddess + ":" + socket.remotePort;
-         console.log("OnRead", socket.remoteAddess, socket.remotePort, json);
+         var key = socket.remoteAddress + ":" + socket.remotePort;
+         console.log("OnRead", socket.remoteAddress, socket.remotePort, json);
 
-         if(json.uri == "distributes" && json.method == "POST") {
+         if(json.uri == "/distributes" && json.method == "POST") {
              map[key] = {
                  socket: socket
              };
-             map[key].info = jsonParam;
-             map[key].info.host = socket.remoteAddess;
+             map[key].info = json.params;
+             map[key].info.host = socket.remoteAddress;
              this.sendInfo();
          }
      }

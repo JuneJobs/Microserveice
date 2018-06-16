@@ -56,13 +56,13 @@ class tcpClient{
             if(this.onEnd)  
                 this.onEnd(this.options);
         });
-        this.client.on('error', () => { //Triggering 'onError' function when 'error' event occurs in net
+        this.client.on('error', (err) => { //Triggering 'onError' function when 'error' event occurs in net
             if(this.onError)
                 this.onError(this.options, err);
         })
     }
     write(packet) {
-        this.client.write(JSON.stringify(packet) + " "); //Send data
+        this.client.write(JSON.stringify(packet) + "	"); //Send data
     }
 }
 
