@@ -7,6 +7,13 @@
  * @last update 2018. 06. 14.
  */
 
+/**
+ * @method Call the micro service goods
+ * @param method    method
+ * @param pathname  URL
+ * @param params    input parameters
+ * @param cb        callback
+ */
  exports.onRequest = function (res, method, pathname, params, cb) {
     switch(method) {
         case "POST":
@@ -20,7 +27,7 @@
     }
  }
 /**
- * @method goods
+ * @method goods inquery
  * @param method    method
  * @param pathname  URL
  * @param params    input parameters
