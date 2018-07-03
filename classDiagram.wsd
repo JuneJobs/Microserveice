@@ -1,0 +1,20 @@
+@startuml
+title new page test
+class tcpClient {
+    var host
+    var port
+    void connect()
+    void write()
+}
+
+class net {
+
+}
+
+class tcpServer implements net {
+    var name
+    var port
+    var url
+
+}
+@enduml
