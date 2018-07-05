@@ -1,20 +1,72 @@
 @startuml
-title new page test
+title Microservice Archetecture
 class tcpClient {
     var host
     var port
-    void connect()
-    void write()
+    void onCreate()
 }
 
 class net {
 
 }
 
-class tcpServer implements net {
-    var name
-    var port
-    var url
+class tcpServer {
+    tcpClient tcpClient
+    net server
+    void connectToDistrbutor(host, port, onNoti)
+}
+
+note "Server class" as N1
+tcpServer .. N1  
+
+tcpServer *-- net
+tcpServer *-- tcpClient
+
+
+class distributor extends tcpServer {
+    void write(socket, packet)
+    void sendInfo(socket)
+}
+
+class actionContext extends tcpServer{
+    void getRequest()
+    void getResponse()
+    void sendResponse()
+}
+
+class redisClient {
+    void connect()
+    void get()
+    void set()
+}
+
+Interface iState {
+    void getState()
+    void setState()
+    void updateState()
+}
+
+Interface iCodec {
+    void encoder()
+    void decoder()
+}
+
+class user extends actionContext {
 
 }
+user *-- redisClient
+iState <|.. user
+iCodec <|.. user
+
+class sensor extends actionContext {
+
+}
+
+sensor *-- redisClient
+
+iState <|.. sensor
+iCodec <|.. sensor
+
+
+
 @enduml
