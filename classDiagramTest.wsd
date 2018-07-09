@@ -1,0 +1,71 @@
+@startuml
+title Test Diagram
+    class Sale {
+        void updatePriceFor(ProductDiscription) 
+    }
+    class ProductDescription{
+
+    }
+    
+    Sale ..> ProductDescription
+
+    interface Person {
+        var firstName
+        var lastName
+        Address address
+    }
+    class Professor {
+
+    }
+    Person <|.. Professor
+ 
+    class Student {
+
+    }
+    Person <|.. Student
+
+    Class Address {
+        var street
+        var city
+        var zip
+    }
+    Person --> Address
+
+    class Order {
+    
+    } 
+
+    class Car {
+        Engine m_Engine;
+        Wheel[] m_Wheel;
+
+        void setEngine(Engine E_engine)
+        void setWhile(Wheel[] m_Wheel)
+    }
+
+    class Engine {
+
+    }
+
+    class Wheel {
+
+    }
+    Car o-- Engine
+    Car o-- Wheel
+    Order o-- Engine
+
+    class Telephone {
+        Button m_Button
+        Headset m_Headset
+
+        Telephone()
+    }
+    class Button {
+
+    }
+    class Headset {
+
+    }
+    Telephone *-- Button
+    Telephone *-- Headset
+@enduml
