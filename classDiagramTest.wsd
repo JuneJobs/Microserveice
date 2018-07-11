@@ -1,43 +1,123 @@
 @startuml
 title Test Diagram
-    class Sale {
-        void updatePriceFor(ProductDiscription) 
+/'
+    class Building{
+        Health
+        Ammor
+        construct()
+        underattack()
     }
-    class ProductDescription{
-
+'/
+    class Carrier {
+        Intercepter
     }
     
-    Sale ..> ProductDescription
+    class Intercepter {
+        Health
+        Attack(ref Charactor)
+    }
 
-    interface Person {
+    Carrier *-- Intercepter
+
+    class Barraks{
+        MakeMarine()
+        MakeMedic()
+    }
+
+    class Marine {
+        Weaphon
+        Move()
+        Attack()
+        UnderAttack()
+    }
+    class 5_56mmGun {
+        Name
+        AttackPower
+        Upgrade()
+    }
+    Marine --> 5_56mmGun
+/'
+    class Medic {
+        Move()
+        UnderAttack()
+        Healing()
+    }
+    Barraks ..> Marine
+    Barraks ..>Medic
+'/
+    class Factory{
+        FactoryAddOn
+        AddOn(ref FactoryAddOn)
+    }
+    
+    class FactoryAddOn {
+        Health: var
+        UnderAttack(ref Character)
+    }
+    Factory o-- FactoryAddOn
+
+    class Bunker{
+
+    }
+/'
+    Building <|-- Barraks
+    Building <|-- Factory
+    Building <|-- Bunker
+'/
+    class IBuildingMoove {
+        Move()
+        Land()
+        Fly()
+    }
+/'
+    Barraks ..|> IBuildingMoove
+    Factory ..|> IBuildingMoove
+'/
+    class A{
+        var a
+    }
+    class B{
+        var b
+    }
+    A *-- B
+
+    Class Person {
+        firstName: var
+        lastName: var
+        address: Address
+        DoSomething()
+    }
+    /'    
         var firstName
         var lastName
         Address address
-    }
     class Professor {
-
+        Selary: dollor
     }
     Person <|.. Professor
  
     class Student {
-
+        Major: var 
     }
     Person <|.. Student
 
+   '/
+    
     Class Address {
-        var street
-        var city
-        var zip
+        street: var
+        city: var
+        zip: var
+        toString(): string
     }
     Person --> Address
-
-    class Order {
     
+    class Order {
+        Engine m_Engine
     } 
-
+/'
     class Car {
-        Engine m_Engine;
-        Wheel[] m_Wheel;
+        Engine m_Engine
+        Wheel[] m_Wheel
 
         void setEngine(Engine E_engine)
         void setWhile(Wheel[] m_Wheel)
@@ -53,7 +133,7 @@ title Test Diagram
     Car o-- Engine
     Car o-- Wheel
     Order o-- Engine
-
+'/
     class Telephone {
         Button m_Button
         Headset m_Headset
