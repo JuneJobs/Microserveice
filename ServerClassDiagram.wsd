@@ -1,0 +1,59 @@
+/'
+    @description Tcp Server Object
+    @author Junhee Park (j.jobs1028/gmail.com, Qualcomm Institute)
+    @since       2018. 07. 10
+    @last update 2018. 07. 10
+'/
+@startuml
+title Micro service classes
+
+/'
+gateway class. It's not a real class but, It should be defined when we talk about the Microservice Architecture.
+'/
+class gateway {
+    
+}
+
+/'
+tcpClient class
+'/
+class tcpClient {
+    client: net
+    connect()
+    write()
+}
+/'
+tcpServer class
+'/
+class tcpServer {
+    tcpClient: tcpClient
+    server: net
+    connectToDistributor()
+}
+/'
+Association class
+'/
+tcpServer --> tcpClient
+
+/'
+distributor class
+'/
+class distributor extends tcpServer {
+
+}
+
+/'
+Service 1
+'/
+class service1 extends tcpServer {
+
+}
+/'
+Service 2
+'/
+class service2 extends tcpServer {
+    
+}
+
+
+@enduml
